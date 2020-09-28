@@ -22,42 +22,17 @@ public class CourseWork {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
-        String xsString = scanner.nextLine();
-        char[] arr = xsString.toCharArray();
-        ArrayList<String> out = new ArrayList<>();
-        for (int i = 0; i < arr.length; i++) {
-            char c = arr[i];
-            if (String.valueOf(c).matches("[0-9]")) {
-                out.add("[");
-                while (String.valueOf(c).matches("[0-9]")) {
-                    out.add(String.valueOf(c));
-                    i++;
-                    c = arr[i];
-                }
-                out.add("]");
-                out.add(" &&");
-            }
-            out.add(String.valueOf(c));
 
+        initializateArraysByZero();
+
+        if (!fetchInputx()) {
+            return;
         }
-        out.remove(out.size() - 1);
-        out.remove(out.size() - 1);
-        StringBuilder str = new StringBuilder("");
-        for (String s : out) {
-            str.append(s);
+        if (chooseLogicVar()) {
+            v3Miliv3_Logic();
+        } else {
+            v3Miliv3_Graph();
         }
-        System.out.println(str.toString());
-//        initializateArraysByZero();
-//
-//        if (!fetchInputx()) {
-//            return;
-//        }
-//        if (chooseLogicVar()) {
-//            v3Miliv3_Logic();
-//        } else {
-//            v3Miliv3_Graph();
-//        }
 
     }
 
@@ -87,7 +62,6 @@ public class CourseWork {
         }
         System.out.printf("Полный маршрут: %s", totalRoute.toString());
     }
-
 
     public static void logStates(int state) {
 
@@ -125,7 +99,6 @@ public class CourseWork {
 
 
     }
-
 
     public static void initializateArraysByZero() {
         Arrays.fill(visitedStates, false);
@@ -250,9 +223,127 @@ public class CourseWork {
         return true;
     }
 
+    public static void passByGraph(){
+        int state = 0;
+        while (true){
+            switch (state) {
+                case 0: {
+                    state = s0();
+                    logStates(state);
+                    if (visitedStates[state]) {
+                        System.out.println("Зацикливание!!!");
+                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+                        return;
+                    }
+                    visitedStates[state] = true;
+                    break;
+                }
+                case 1: {
+                    state = s1();
+                    logStates(state);
+                    if (visitedStates[state]) {
+                        System.out.println("Зацикливание!!!");
+                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+                        return;
+                    }
+                    visitedStates[state] = true;
+                    break;
+                }
+                case 2 :{
+                    state = s2();
+                    logStates(state);
+                    if (visitedStates[state]) {
+                        System.out.println("Зацикливание!!!");
+                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+                        return;
+                    }
+                    visitedStates[state] = true;
+                    break;
+                }
+                case 3 : {
+                    state = s3();
+                    logStates(state);
+                    if (visitedStates[state]) {
+                        System.out.println("Зацикливание!!!");
+                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+                        return;
+                    }
+                    visitedStates[state] = true;
+                    break;
+                }
+                case 4 : {
+                    state = s4();
+                    logStates(state);
+                    if (visitedStates[state]) {
+                        System.out.println("Зацикливание!!!");
+                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+                        return;
+                    }
+                    visitedStates[state] = true;
+                    break;
+                }
+                case 5 : {
+                    state =  s5();
+                    logStates(state);
+                    if (visitedStates[state]) {
+                        System.out.println("Зацикливание!!!");
+                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+                        return;
+                    }
+                    visitedStates[state] = true;
+                    break;
+                }
+                case 6 : {
+                    state = s6();
+                    logStates(state);
+                    if (visitedStates[state]) {
+                        System.out.println("Зацикливание!!!");
+                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+                        return;
+                    }
+                    visitedStates[state] = true;
+                    break;
+                }
+                case 7 : {
+                    state =  s7();
+                    logStates(state);
+                    if (visitedStates[state]) {
+                        System.out.println("Зацикливание!!!");
+                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+                        return;
+                    }
+                    visitedStates[state] = true;
+                    break;
+                }
+                case 8 : {
+                    state = s8();
+                    logStates(state);
+                    if (visitedStates[state]) {
+                        System.out.println("Зацикливание!!!");
+                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+                        return;
+                    }
+                    visitedStates[state] = true;
+                    break;
+                }
+                case 9 : {
+                    state = s9();
+                    logStates(state);
+                    if (visitedStates[state]) {
+                        System.out.println("Зацикливание!!!");
+                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+                        return;
+                    }
+                    visitedStates[state] = true;
+                    break;
+                }
+            }
+        }
+    }
 
     public static void v3Miliv3_Graph() {
-
+        passByGraph();
+        System.out.printf("Полный маршрут: %s", totalRoute.toString());
     }
 
     public static int s0() {
@@ -309,7 +400,7 @@ public class CourseWork {
             y[8] = true;
             y[9] = true;
             return 3;
-        } else if (!x[12] && !x[13] || x[12] && !x[13] || x[12] && x[13] && !x[9]) {
+        } else if (!x[12] && !x[14] || x[12] && !x[13] || x[12] && x[13] && !x[9]) {
             y[5] = true;
             y[6] = true;
             y[7] = true;
@@ -343,31 +434,76 @@ public class CourseWork {
 
     public static int s4() {
         Arrays.fill(y, false);
-        if (x[12] && x[13] && x[9]) {
-            y[5] = true;
-            y[7] = true;
-            y[8] = true;
-            y[9] = true;
-            return 3;
-        } else if (!x[12] && !x[13] || x[12] && !x[13] || x[12] && x[13] && !x[9]) {
-            y[5] = true;
-            y[6] = true;
-            y[7] = true;
+        if (x[17] && !x[19] || x[17] && x[19] && !x[20] && !x[21] && !x[22]) {
+            y[10] = true;
+            y[11] = true;
+            return 2;
+        } else if (!x[17]) {
             return 4;
-        } else if (!x[12] && x[14] && x[15]) {
-            y[16] = true;
+        } else if (x[17] && x[19] && x[20]) {
             y[17] = true;
             y[18] = true;
+            y[20] = true;
             return 5;
 
-        } else if (!x[12] && x[14] && !x[15] && x[18]) {
+        } else if (x[17] && x[19] && !x[20] && !x[21] && x[22]) {
+            y[23] = true;
+            return 6;
+        } else if (x[17] && x[19] && !x[20] && x[21]) {
             y[1] = true;
-            y[2] = true;
             y[15] = true;
+            y[19] = true;
             return 7;
-        } else if (!x[12] && x[14] && !x[15] && !x[18]) {
-            y[21] = true;
-            return 8;
+        } else return -1;
+    }
+
+
+    public static int s5() {
+        Arrays.fill(y, false);
+        if (x[10] && x[7]) {
+            y[5] = true;
+            y[7] = true;
+            y[9] = true;
+            y[13] = true;
+            return 3;
+        } else if (!x[10]) {
+            return 5;
+        } else if (x[10] && !x[7]) {
+            y[12] = true;
+            return 6;
+        } else return -1;
+    }
+
+    public static int s6() {
+        Arrays.fill(y, false);
+        y[22] = true;
+        return 8;
+    }
+
+    public static int s7() {
+        Arrays.fill(y, false);
+        if (x[8]) {
+            y[14] = true;
+            return 6;
+        } else if (!x[8]) {
+            return 7;
+        } else return -1;
+    }
+
+    public static int s8() {
+            y[6] = true;
+            y[7] = true;
+            y[24] = true;
+            return 9;
+    }
+
+    public static int s9() {
+        Arrays.fill(y, false);
+        if (x[23]) {
+            y[25] = true;
+            return 0;
+        } else if (!x[23]) {
+            return 9;
         } else return -1;
     }
 
