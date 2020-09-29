@@ -14,11 +14,12 @@ public class CourseWork {
 
     public static boolean[] u = new boolean[5];
 
-    public static StringBuilder totalRoute = new StringBuilder("S0/- => ");
+    public static StringBuilder totalRoute = new StringBuilder("");
 
     // массив для того, чтобы проверки на цикл (был ли в ланном состоянии автомат или нет)
     public static boolean[] visitedStates = new boolean[10];
 
+    public static boolean zeroStateFirstTime = true;
 
     public static void main(String[] args) {
 
@@ -38,9 +39,9 @@ public class CourseWork {
 
 
     public static boolean chooseLogicVar() {
-        System.out.println("Выберите вариант обхода: логические выражения [1], граф-схема [0]");
+        System.out.println("Выберите вариант обхода: логические выражения [y], граф-схема [n]");
         Scanner scanner = new Scanner(System.in);
-        return scanner.next().equals("1");
+        return scanner.next().equals("y");
     }
 
 
@@ -96,7 +97,12 @@ public class CourseWork {
         totalRoute.append(" ");
         if (state != 0)
             totalRoute.append("=> ");
-
+        else {
+            if (zeroStateFirstTime){
+                totalRoute.append("=> ");
+                zeroStateFirstTime = false;
+            }
+        }
 
     }
 
@@ -342,6 +348,7 @@ public class CourseWork {
     }
 
     public static void v3Miliv3_Graph() {
+        totalRoute.append("S0/- =>");
         passByGraph();
         System.out.printf("Полный маршрут: %s", totalRoute.toString());
     }
