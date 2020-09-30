@@ -46,6 +46,7 @@ public class CourseWork {
         tests();
         initializateArraysByZero();
         long m;
+        long end;
         System.out.println("Введите строку из 1 и 0 для Х1-Х23");
         Scanner scanner = new Scanner(System.in);
         String inputStr = scanner.next();
@@ -59,9 +60,10 @@ public class CourseWork {
             m = System.nanoTime();
             v3Miliv3_Graph();
         }
+        end = System.nanoTime() - m;
         System.out.printf("Полный маршрут: %s", totalRoute.toString());
         System.out.print("\nВремя работы программы: ");
-        System.out.print((System.nanoTime() - m));
+        System.out.print(end);
         System.out.print(" нс");
     }
 
