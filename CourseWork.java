@@ -1,8 +1,13 @@
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class CourseWork {
+    public static boolean testing = true;
     // массив входных сигналов X
     public static boolean[] x = new boolean[24];
     // массив выходных сигналов Y
@@ -14,6 +19,21 @@ public class CourseWork {
 
     public static boolean[] u = new boolean[5];
 
+    public static ArrayList<String> tests = new ArrayList<>(Arrays.asList(
+            "01011100010101010100111",
+            "11111100000100001001000",
+            "10010111000011001001010",
+            "11100111110000001011101",
+            "01000100101001011100110",
+            "11100011011111000111101",
+            "00000001111010010000000",
+            "01011001101110001110110",
+            "00101110100111110110011",
+            "11111111010111110110101"
+
+    ));
+    ;
+
     public static StringBuilder totalRoute = new StringBuilder("");
 
     // массив для того, чтобы проверки на цикл (был ли в ланном состоянии автомат или нет)
@@ -21,22 +41,59 @@ public class CourseWork {
 
     public static boolean zeroStateFirstTime = true;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-
+        tests();
         initializateArraysByZero();
-
-        if (!fetchInputx()) {
+        long m;
+        System.out.println("Введите строку из 1 и 0 для Х1-Х23");
+        Scanner scanner = new Scanner(System.in);
+        String inputStr = scanner.next();
+        if (!fetchInputx(inputStr)) {
             return;
         }
         if (chooseLogicVar()) {
+            m = System.nanoTime();
             v3Miliv3_Logic();
         } else {
+            m = System.nanoTime();
             v3Miliv3_Graph();
         }
-
+        System.out.printf("Полный маршрут: %s", totalRoute.toString());
+        System.out.print("\nВремя работы программы: ");
+        System.out.print((System.nanoTime() - m));
+        System.out.print(" нс");
     }
 
+
+    public static void tests() throws IOException {
+        initializateArraysByZero();
+        FileWriter writerL = new FileWriter("logic.txt", false);
+        FileWriter writerG = new FileWriter("graph.txt", false);
+
+        for (String st : tests) {
+
+            fetchInputx(st);
+            long m = System.nanoTime();
+            v3Miliv3_Logic();
+            long time = System.nanoTime() - m;
+            writerL.write(String.valueOf(time));
+            writerL.write("\n");
+            writerL.flush();
+            System.out.printf("Полный маршрут: %s", totalRoute.toString());
+
+            m = System.nanoTime();
+            v3Miliv3_Graph();
+            time = System.nanoTime() - m;
+            writerG.write(String.valueOf(time));
+            writerG.write("\n");
+            writerG.flush();
+            System.out.printf("Полный маршрут: %s", totalRoute.toString());
+
+            System.out.println();
+            System.out.printf("Xs %s", st);
+        }
+    }
 
     public static boolean chooseLogicVar() {
         System.out.println("Выберите вариант обхода: логические выражения [y], граф-схема [n]");
@@ -55,13 +112,13 @@ public class CourseWork {
             if (visitedStates[state]) {
                 System.out.println("Зацикливание!!!");
                 totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+//                totalRoute.append("LOOP");
                 break;
             }
             visitedStates[state] = true;
             if (state == 0)
                 break;
         }
-        System.out.printf("Полный маршрут: %s", totalRoute.toString());
     }
 
     public static void logStates(int state) {
@@ -98,7 +155,7 @@ public class CourseWork {
         if (state != 0)
             totalRoute.append("=> ");
         else {
-            if (zeroStateFirstTime){
+            if (zeroStateFirstTime) {
                 totalRoute.append("=> ");
                 zeroStateFirstTime = false;
             }
@@ -201,10 +258,11 @@ public class CourseWork {
         return binaryCodeOfState.toString();
     }
 
-    public static boolean fetchInputx() {
-        System.out.println("Введите строку из 1 и 0 для Х1-Х23");
-        Scanner scanner = new Scanner(System.in);
-        String inputStr = scanner.next();
+    public static boolean fetchInputx(String st) {
+//        if (!testing) {
+//
+//        }
+        String inputStr = st;
         if (inputStr.length() != 23) {
             System.out.println("Введено неверное количество Х-ов");
             return false;
@@ -229,117 +287,119 @@ public class CourseWork {
         return true;
     }
 
-    public static void passByGraph(){
+    public static void passByGraph() {
         int state = 0;
-        while (true){
+        while (true) {
             switch (state) {
                 case 0: {
                     state = s0();
-                    logStates(state);
+
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
                         totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
                         return;
                     }
+                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
                 case 1: {
                     state = s1();
-                    logStates(state);
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
                         totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
                         return;
                     }
+                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
-                case 2 :{
+                case 2: {
                     state = s2();
-                    logStates(state);
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
                         totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
                         return;
                     }
+                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
-                case 3 : {
+                case 3: {
                     state = s3();
-                    logStates(state);
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
                         totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
                         return;
                     }
+                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
-                case 4 : {
+                case 4: {
                     state = s4();
-                    logStates(state);
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
                         totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
                         return;
                     }
+                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
-                case 5 : {
-                    state =  s5();
-                    logStates(state);
+                case 5: {
+                    state = s5();
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
                         totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
                         return;
                     }
+                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
-                case 6 : {
+                case 6: {
                     state = s6();
-                    logStates(state);
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
                         totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
                         return;
                     }
+                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
-                case 7 : {
-                    state =  s7();
-                    logStates(state);
+                case 7: {
+                    state = s7();
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
                         totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
                         return;
                     }
+                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
-                case 8 : {
+                case 8: {
                     state = s8();
-                    logStates(state);
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
                         totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
                         return;
                     }
+                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
-                case 9 : {
+                case 9: {
                     state = s9();
-                    logStates(state);
+
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
                         totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
                         return;
                     }
+                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
@@ -350,7 +410,6 @@ public class CourseWork {
     public static void v3Miliv3_Graph() {
         totalRoute.append("S0/- =>");
         passByGraph();
-        System.out.printf("Полный маршрут: %s", totalRoute.toString());
     }
 
     public static int s0() {
@@ -363,12 +422,19 @@ public class CourseWork {
             return 1;
         } else if ((!x[1] && !x[2] && !x[4] && x[5]) || (!x[1] && x[2] && !x[3] && !x[4] && x[5])) {
             return 2;
-        } else if ((!x[1] && !x[2] && x[4] && !x[6] && x[14] && x[15]) || (!x[1] && x[2] && !x[3] && x[4] && !x[6] && !x[14])
+        } else if ((!x[1] && !x[2] && x[4] && !x[6] && !x[14]) || (!x[1] && x[2] && !x[3] && x[4] && !x[6] && !x[14])
                 || (x[1] && !x[14])) {
             y[5] = true;
             y[6] = true;
             y[7] = true;
             return 4;
+        } else if (!x[1] && !x[2] && x[4] && !x[6] && x[14] && x[15] || !x[1] && x[2] && !x[3] && x[4] && !x[6] && x[14] && x[15]
+                || x[1] && x[14] && x[15]) {
+            y[16] = true;
+            y[17] = true;
+            y[18] = true;
+            return 5;
+
         } else if ((!x[1] && !x[2] && x[4] && x[6]) || (!x[1] && x[2] && !x[3] && x[4] && x[6])
                 || (!x[1] && x[2] && x[3])) {
             return 6;
@@ -379,13 +445,15 @@ public class CourseWork {
             y[2] = true;
             y[15] = true;
             return 7;
-        } else if ((!x[1] && !x[2] && x[4] && !x[6] && x[14] && !x[15] && x[18])
-                || (!x[1] && x[2] && !x[3] && x[4] && !x[6] && x[14] && !x[15] && x[18])
-                || (x[1] && x[14] && !x[15] && x[18])) {
+        } else
+
+        //            if ((!x[1] && !x[2] && x[4] && !x[6] && x[14] && !x[15] && x[18])
+//                || (!x[1] && x[2] && !x[3] && x[4] && !x[6] && x[14] && !x[15] && x[18])
+//                || (x[1] && x[14] && !x[15] && x[18]))
+        {
             y[21] = true;
             return 8;
-        } else
-            return -1;
+        }
 
     }
 
@@ -393,10 +461,12 @@ public class CourseWork {
         Arrays.fill(y, false);
         if (!x[11]) {
             return 1;
-        } else if (x[11]) {
+        } else
+//            if (x[11])
+        {
             y[4] = true;
             return 2;
-        } else return -1;
+        }
     }
 
     public static int s2() {
@@ -423,10 +493,12 @@ public class CourseWork {
             y[2] = true;
             y[15] = true;
             return 7;
-        } else if (!x[12] && x[14] && !x[15] && !x[18]) {
+        } else
+//            if (!x[12] && x[14] && !x[15] && !x[18])
+        {
             y[21] = true;
             return 8;
-        } else return -1;
+        }
     }
 
 
@@ -434,9 +506,11 @@ public class CourseWork {
         Arrays.fill(y, false);
         if (!x[16]) {
             return 3;
-        } else if (x[16]) {
+        } else
+//            if (x[16])
+        {
             return 6;
-        } else return -1;
+        }
     }
 
     public static int s4() {
@@ -456,12 +530,14 @@ public class CourseWork {
         } else if (x[17] && x[19] && !x[20] && !x[21] && x[22]) {
             y[23] = true;
             return 6;
-        } else if (x[17] && x[19] && !x[20] && x[21]) {
+        } else
+//            if (x[17] && x[19] && !x[20] && x[21])
+        {
             y[1] = true;
             y[15] = true;
             y[19] = true;
             return 7;
-        } else return -1;
+        }
     }
 
 
@@ -475,10 +551,12 @@ public class CourseWork {
             return 3;
         } else if (!x[10]) {
             return 5;
-        } else if (x[10] && !x[7]) {
+        } else
+//            if (x[10] && !x[7])
+        {
             y[12] = true;
             return 6;
-        } else return -1;
+        }
     }
 
     public static int s6() {
@@ -492,16 +570,18 @@ public class CourseWork {
         if (x[8]) {
             y[14] = true;
             return 6;
-        } else if (!x[8]) {
+        } else
+//            if (!x[8])
+        {
             return 7;
-        } else return -1;
+        }
     }
 
     public static int s8() {
-            y[6] = true;
-            y[7] = true;
-            y[24] = true;
-            return 9;
+        y[6] = true;
+        y[7] = true;
+        y[24] = true;
+        return 9;
     }
 
     public static int s9() {
@@ -509,9 +589,11 @@ public class CourseWork {
         if (x[23]) {
             y[25] = true;
             return 0;
-        } else if (!x[23]) {
+        } else
+//            if (!x[23])
+        {
             return 9;
-        } else return -1;
+        }
     }
 
 }
