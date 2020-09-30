@@ -41,9 +41,11 @@ public class CourseWork {
 
     public static boolean zeroStateFirstTime = true;
 
+    public static String inputMethodType;
+
     public static void main(String[] args) throws IOException {
 
-        tests();
+//        tests();
         initializateArraysByZero();
         long m;
         long end;
@@ -54,13 +56,20 @@ public class CourseWork {
             return;
         }
         if (chooseLogicVar()) {
-            m = System.nanoTime();
-            v3Miliv3_Logic();
+            if (inputMethodType.equals("y")) {
+                m = System.nanoTime();
+                v3Miliv3_Logic();
+            } else {
+                m = System.nanoTime();
+                v3Miliv3_Graph();
+            }
+
         } else {
-            m = System.nanoTime();
-            v3Miliv3_Graph();
+            System.out.println("Выбран неверный метод.");
+            return;
         }
         end = System.nanoTime() - m;
+        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
         System.out.printf("Полный маршрут: %s", totalRoute.toString());
         System.out.print("\nВремя работы программы: ");
         System.out.print(end);
@@ -100,7 +109,8 @@ public class CourseWork {
     public static boolean chooseLogicVar() {
         System.out.println("Выберите вариант обхода: логические выражения [y], граф-схема [n]");
         Scanner scanner = new Scanner(System.in);
-        return scanner.next().equals("y");
+        inputMethodType = scanner.next();
+        return inputMethodType.equals("y") || inputMethodType.equals("n");
     }
 
 
@@ -111,15 +121,14 @@ public class CourseWork {
             refreshLogicFunction();
             state = fetchStateInDecimal();
             logStates(state);
+            if (state == 0)
+                break;
             if (visitedStates[state]) {
                 System.out.println("Зацикливание!!!");
-                totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
-//                totalRoute.append("LOOP");
                 break;
             }
             visitedStates[state] = true;
-            if (state == 0)
-                break;
+
         }
     }
 
@@ -127,6 +136,7 @@ public class CourseWork {
 
         StringBuilder Ys = new StringBuilder("");
         System.out.printf("Текущее состояние: %d\n", state);
+        String s = fetchStateInBinaryString();
         System.out.printf("Код текущего состояния: %s\n", fetchStateInBinaryString());
         for (int i = 1; i <= 25; i++) {
             System.out.printf("y%d ", i);
@@ -154,14 +164,14 @@ public class CourseWork {
         totalRoute.append("/");
         totalRoute.append(Ys);
         totalRoute.append(" ");
-        if (state != 0)
-            totalRoute.append("=> ");
-        else {
-            if (zeroStateFirstTime) {
-                totalRoute.append("=> ");
-                zeroStateFirstTime = false;
-            }
-        }
+//        if (state != 0)
+        totalRoute.append("=> ");
+//        else {
+//            if (zeroStateFirstTime) {
+//                totalRoute.append("=> ");
+//                zeroStateFirstTime = false;
+//            }
+//        }
 
     }
 
@@ -247,12 +257,11 @@ public class CourseWork {
         return Integer.parseInt(binaryCodeOfState.toString(), 2);
     }
 
+
     public static String fetchStateInBinaryString() {
         StringBuilder binaryCodeOfState = new StringBuilder("");
-        boolean position;
         for (int i = a.length - 1; i >= 1; i--) {
-            position = a[i];
-            if (position)
+            if (a[i])
                 binaryCodeOfState.append('1');
             else
                 binaryCodeOfState.append('0');
@@ -261,17 +270,13 @@ public class CourseWork {
     }
 
     public static boolean fetchInputx(String st) {
-//        if (!testing) {
-//
-//        }
-        String inputStr = st;
-        if (inputStr.length() != 23) {
+        if (st.length() != 23) {
             System.out.println("Введено неверное количество Х-ов");
             return false;
         }
         char oneChar;
-        for (int i = 1; i <= inputStr.length(); i++) {
-            oneChar = inputStr.charAt(i - 1);
+        for (int i = 1; i <= st.length(); i++) {
+            oneChar = st.charAt(i - 1);
             if (oneChar == '0') {
                 x[i] = false;
             } else if (oneChar == '1') {
@@ -289,119 +294,157 @@ public class CourseWork {
         return true;
     }
 
+
+    public static void convertDecimalStatesIntoBooleanType(int state) {
+        char[] binaryStrByChars = Integer.toBinaryString(state).toCharArray();
+        Arrays.fill(a, false);
+        for (int i = binaryStrByChars.length - 1,  j = 1; i >= 0; i--, j++) {
+            a[j] = binaryStrByChars[i] == '1';
+        }
+    }
+
     public static void passByGraph() {
         int state = 0;
         while (true) {
             switch (state) {
                 case 0: {
-                    state = s0();
-
+                    state = s0();convertDecimalStatesIntoBooleanType(state);
+                    logStates(state);
+                    if (state == 0)
+                        return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+
                         return;
                     }
-                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
                 case 1: {
-                    state = s1();
+                    state = s1();convertDecimalStatesIntoBooleanType(state);
+
+                    logStates(state);
+                    if (state == 0)
+                        return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+
                         return;
                     }
-                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
                 case 2: {
-                    state = s2();
+                    state = s2();convertDecimalStatesIntoBooleanType(state);
+
+                    logStates(state);
+                    if (state == 0)
+                        return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+
                         return;
                     }
-                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
                 case 3: {
-                    state = s3();
+                    state = s3();convertDecimalStatesIntoBooleanType(state);
+
+                    logStates(state);
+                    if (state == 0)
+                        return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+
                         return;
                     }
-                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
                 case 4: {
-                    state = s4();
+                    state = s4();convertDecimalStatesIntoBooleanType(state);
+
+                    logStates(state);
+                    if (state == 0)
+                        return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+
                         return;
                     }
-                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
                 case 5: {
-                    state = s5();
+                    state = s5();convertDecimalStatesIntoBooleanType(state);
+
+                    logStates(state);
+                    if (state == 0)
+                        return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+
                         return;
                     }
-                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
                 case 6: {
-                    state = s6();
+                    state = s6();convertDecimalStatesIntoBooleanType(state);
+
+                    logStates(state);
+                    if (state == 0)
+                        return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+
                         return;
                     }
-                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
                 case 7: {
-                    state = s7();
+                    state = s7();convertDecimalStatesIntoBooleanType(state);
+
+
+                    logStates(state);
+                    if (state == 0)
+                        return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+
                         return;
                     }
-                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
                 case 8: {
-                    state = s8();
+                    state = s8();convertDecimalStatesIntoBooleanType(state);
+
+                    logStates(state);
+                    if (state == 0)
+                        return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+
                         return;
                     }
-                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
                 case 9: {
-                    state = s9();
+                    state = s9();convertDecimalStatesIntoBooleanType(state);
 
+
+                    logStates(state);
+                    if (state == 0)
+                        return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-                        totalRoute.delete(totalRoute.length() - 4, totalRoute.length());
+
                         return;
                     }
-                    logStates(state);
                     visitedStates[state] = true;
                     break;
                 }
@@ -410,7 +453,8 @@ public class CourseWork {
     }
 
     public static void v3Miliv3_Graph() {
-        totalRoute.append("S0/- =>");
+//        totalRoute.append("S0/- =>");
+        logStates(0);
         passByGraph();
     }
 
