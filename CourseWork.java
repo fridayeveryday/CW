@@ -128,12 +128,10 @@ public class CourseWork {
                 break;
             }
             visitedStates[state] = true;
-
         }
     }
 
     public static void logStates(int state) {
-
         StringBuilder Ys = new StringBuilder("");
         System.out.printf("Текущее состояние: %d\n", state);
         String s = fetchStateInBinaryString();
@@ -164,15 +162,7 @@ public class CourseWork {
         totalRoute.append("/");
         totalRoute.append(Ys);
         totalRoute.append(" ");
-//        if (state != 0)
         totalRoute.append("=> ");
-//        else {
-//            if (zeroStateFirstTime) {
-//                totalRoute.append("=> ");
-//                zeroStateFirstTime = false;
-//            }
-//        }
-
     }
 
     public static void initializateArraysByZero() {
@@ -303,7 +293,8 @@ public class CourseWork {
         }
     }
 
-    public static void passByGraph() {
+    public static void v3Miliv3_Graph() {
+        logStates(0);
         int state = 0;
         while (true) {
             switch (state) {
@@ -315,7 +306,6 @@ public class CourseWork {
                         return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-
                         return;
                     }
                     visitedStates[state] = true;
@@ -324,13 +314,11 @@ public class CourseWork {
                 case 1: {
                     state = s1();
                     convertDecimalStatesIntoBooleanType(state);
-
                     logStates(state);
                     if (state == 0)
                         return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-
                         return;
                     }
                     visitedStates[state] = true;
@@ -339,13 +327,11 @@ public class CourseWork {
                 case 2: {
                     state = s2();
                     convertDecimalStatesIntoBooleanType(state);
-
                     logStates(state);
                     if (state == 0)
                         return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-
                         return;
                     }
                     visitedStates[state] = true;
@@ -354,13 +340,11 @@ public class CourseWork {
                 case 3: {
                     state = s3();
                     convertDecimalStatesIntoBooleanType(state);
-
                     logStates(state);
                     if (state == 0)
                         return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-
                         return;
                     }
                     visitedStates[state] = true;
@@ -369,13 +353,11 @@ public class CourseWork {
                 case 4: {
                     state = s4();
                     convertDecimalStatesIntoBooleanType(state);
-
                     logStates(state);
                     if (state == 0)
                         return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-
                         return;
                     }
                     visitedStates[state] = true;
@@ -384,13 +366,11 @@ public class CourseWork {
                 case 5: {
                     state = s5();
                     convertDecimalStatesIntoBooleanType(state);
-
                     logStates(state);
                     if (state == 0)
                         return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-
                         return;
                     }
                     visitedStates[state] = true;
@@ -399,13 +379,11 @@ public class CourseWork {
                 case 6: {
                     state = s6();
                     convertDecimalStatesIntoBooleanType(state);
-
                     logStates(state);
                     if (state == 0)
                         return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-
                         return;
                     }
                     visitedStates[state] = true;
@@ -414,14 +392,11 @@ public class CourseWork {
                 case 7: {
                     state = s7();
                     convertDecimalStatesIntoBooleanType(state);
-
-
                     logStates(state);
                     if (state == 0)
                         return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-
                         return;
                     }
                     visitedStates[state] = true;
@@ -430,13 +405,11 @@ public class CourseWork {
                 case 8: {
                     state = s8();
                     convertDecimalStatesIntoBooleanType(state);
-
                     logStates(state);
                     if (state == 0)
                         return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-
                         return;
                     }
                     visitedStates[state] = true;
@@ -445,14 +418,11 @@ public class CourseWork {
                 case 9: {
                     state = s9();
                     convertDecimalStatesIntoBooleanType(state);
-
-
                     logStates(state);
                     if (state == 0)
                         return;
                     if (visitedStates[state]) {
                         System.out.println("Зацикливание!!!");
-
                         return;
                     }
                     visitedStates[state] = true;
@@ -460,12 +430,6 @@ public class CourseWork {
                 }
             }
         }
-    }
-
-    public static void v3Miliv3_Graph() {
-//        totalRoute.append("S0/- =>");
-        logStates(0);
-        passByGraph();
     }
 
     public static int s0() {
