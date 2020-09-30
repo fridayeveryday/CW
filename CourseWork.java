@@ -298,7 +298,7 @@ public class CourseWork {
     public static void convertDecimalStatesIntoBooleanType(int state) {
         char[] binaryStrByChars = Integer.toBinaryString(state).toCharArray();
         Arrays.fill(a, false);
-        for (int i = binaryStrByChars.length - 1,  j = 1; i >= 0; i--, j++) {
+        for (int i = binaryStrByChars.length - 1, j = 1; i >= 0; i--, j++) {
             a[j] = binaryStrByChars[i] == '1';
         }
     }
@@ -308,7 +308,8 @@ public class CourseWork {
         while (true) {
             switch (state) {
                 case 0: {
-                    state = s0();convertDecimalStatesIntoBooleanType(state);
+                    state = s0();
+                    convertDecimalStatesIntoBooleanType(state);
                     logStates(state);
                     if (state == 0)
                         return;
@@ -321,7 +322,8 @@ public class CourseWork {
                     break;
                 }
                 case 1: {
-                    state = s1();convertDecimalStatesIntoBooleanType(state);
+                    state = s1();
+                    convertDecimalStatesIntoBooleanType(state);
 
                     logStates(state);
                     if (state == 0)
@@ -335,7 +337,8 @@ public class CourseWork {
                     break;
                 }
                 case 2: {
-                    state = s2();convertDecimalStatesIntoBooleanType(state);
+                    state = s2();
+                    convertDecimalStatesIntoBooleanType(state);
 
                     logStates(state);
                     if (state == 0)
@@ -349,7 +352,8 @@ public class CourseWork {
                     break;
                 }
                 case 3: {
-                    state = s3();convertDecimalStatesIntoBooleanType(state);
+                    state = s3();
+                    convertDecimalStatesIntoBooleanType(state);
 
                     logStates(state);
                     if (state == 0)
@@ -363,7 +367,8 @@ public class CourseWork {
                     break;
                 }
                 case 4: {
-                    state = s4();convertDecimalStatesIntoBooleanType(state);
+                    state = s4();
+                    convertDecimalStatesIntoBooleanType(state);
 
                     logStates(state);
                     if (state == 0)
@@ -377,7 +382,8 @@ public class CourseWork {
                     break;
                 }
                 case 5: {
-                    state = s5();convertDecimalStatesIntoBooleanType(state);
+                    state = s5();
+                    convertDecimalStatesIntoBooleanType(state);
 
                     logStates(state);
                     if (state == 0)
@@ -391,7 +397,8 @@ public class CourseWork {
                     break;
                 }
                 case 6: {
-                    state = s6();convertDecimalStatesIntoBooleanType(state);
+                    state = s6();
+                    convertDecimalStatesIntoBooleanType(state);
 
                     logStates(state);
                     if (state == 0)
@@ -405,7 +412,8 @@ public class CourseWork {
                     break;
                 }
                 case 7: {
-                    state = s7();convertDecimalStatesIntoBooleanType(state);
+                    state = s7();
+                    convertDecimalStatesIntoBooleanType(state);
 
 
                     logStates(state);
@@ -420,7 +428,8 @@ public class CourseWork {
                     break;
                 }
                 case 8: {
-                    state = s8();convertDecimalStatesIntoBooleanType(state);
+                    state = s8();
+                    convertDecimalStatesIntoBooleanType(state);
 
                     logStates(state);
                     if (state == 0)
@@ -434,7 +443,8 @@ public class CourseWork {
                     break;
                 }
                 case 9: {
-                    state = s9();convertDecimalStatesIntoBooleanType(state);
+                    state = s9();
+                    convertDecimalStatesIntoBooleanType(state);
 
 
                     logStates(state);
@@ -464,7 +474,6 @@ public class CourseWork {
             y[1] = true;
             y[2] = true;
             y[3] = true;
-            logStates(0);
             return 1;
         } else if ((!x[1] && !x[2] && !x[4] && x[5]) || (!x[1] && x[2] && !x[3] && !x[4] && x[5])) {
             return 2;
