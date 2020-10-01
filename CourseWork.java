@@ -1,13 +1,10 @@
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class CourseWork {
-    public static boolean testing = true;
     // массив входных сигналов X
     public static boolean[] x = new boolean[24];
     // массив выходных сигналов Y
@@ -32,10 +29,8 @@ public class CourseWork {
             "11111111010111110110101"
 
     ));
-    ;
 
     public static StringBuilder totalRoute = new StringBuilder("");
-
     // массив для того, чтобы проверки на цикл (был ли в ланном состоянии автомат или нет)
     public static boolean[] visitedStates = new boolean[10];
 
@@ -75,7 +70,6 @@ public class CourseWork {
         System.out.print(end);
         System.out.print(" нс");
     }
-
 
     public static void tests() throws IOException {
         initializateArraysByZero();
